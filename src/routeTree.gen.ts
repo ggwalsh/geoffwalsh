@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NotesIndexRouteImport } from './routes/notes.index'
+import { Route as NotesKioskRouteImport } from './routes/notes.kiosk'
 import { Route as NotesWasteRouteImport } from './routes/notes.waste'
+import { Route as NotesZorathRouteImport } from './routes/notes.zorath'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsBoardRouteImport } from './routes/tools.board'
 import { Route as ToolsStockRouteImport } from './routes/tools.stock'
@@ -27,9 +29,19 @@ const NotesIndexRoute = NotesIndexRouteImport.update({
   path: '/notes/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotesKioskRoute = NotesKioskRouteImport.update({
+  id: '/notes/kiosk',
+  path: '/notes/kiosk',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotesWasteRoute = NotesWasteRouteImport.update({
   id: '/notes/waste',
   path: '/notes/waste',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesZorathRoute = NotesZorathRouteImport.update({
+  id: '/notes/zorath',
+  path: '/notes/zorath',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
@@ -55,7 +67,9 @@ const ToolsWallRoute = ToolsWallRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/notes/kiosk': typeof NotesKioskRoute
   '/notes/waste': typeof NotesWasteRoute
+  '/notes/zorath': typeof NotesZorathRoute
   '/tools/board': typeof ToolsBoardRoute
   '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
@@ -64,7 +78,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/notes/kiosk': typeof NotesKioskRoute
   '/notes/waste': typeof NotesWasteRoute
+  '/notes/zorath': typeof NotesZorathRoute
   '/tools/board': typeof ToolsBoardRoute
   '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
@@ -74,7 +90,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/notes/kiosk': typeof NotesKioskRoute
   '/notes/waste': typeof NotesWasteRoute
+  '/notes/zorath': typeof NotesZorathRoute
   '/tools/board': typeof ToolsBoardRoute
   '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
@@ -85,7 +103,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/notes/kiosk'
     | '/notes/waste'
+    | '/notes/zorath'
     | '/tools/board'
     | '/tools/stock'
     | '/tools/wall'
@@ -94,7 +114,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/notes/kiosk'
     | '/notes/waste'
+    | '/notes/zorath'
     | '/tools/board'
     | '/tools/stock'
     | '/tools/wall'
@@ -103,7 +125,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/notes/kiosk'
     | '/notes/waste'
+    | '/notes/zorath'
     | '/tools/board'
     | '/tools/stock'
     | '/tools/wall'
@@ -113,7 +137,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  NotesKioskRoute: typeof NotesKioskRoute
   NotesWasteRoute: typeof NotesWasteRoute
+  NotesZorathRoute: typeof NotesZorathRoute
   ToolsBoardRoute: typeof ToolsBoardRoute
   ToolsStockRoute: typeof ToolsStockRoute
   ToolsWallRoute: typeof ToolsWallRoute
@@ -137,11 +163,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notes/kiosk': {
+      id: '/notes/kiosk'
+      path: '/notes/kiosk'
+      fullPath: '/notes/kiosk'
+      preLoaderRoute: typeof NotesKioskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notes/waste': {
       id: '/notes/waste'
       path: '/notes/waste'
       fullPath: '/notes/waste'
       preLoaderRoute: typeof NotesWasteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/zorath': {
+      id: '/notes/zorath'
+      path: '/notes/zorath'
+      fullPath: '/notes/zorath'
+      preLoaderRoute: typeof NotesZorathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/': {
@@ -177,7 +217,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  NotesKioskRoute: NotesKioskRoute,
   NotesWasteRoute: NotesWasteRoute,
+  NotesZorathRoute: NotesZorathRoute,
   ToolsBoardRoute: ToolsBoardRoute,
   ToolsStockRoute: ToolsStockRoute,
   ToolsWallRoute: ToolsWallRoute,

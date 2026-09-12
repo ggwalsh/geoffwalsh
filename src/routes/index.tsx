@@ -158,9 +158,11 @@ function Home() {
           <ul className="mt-8 divide-y divide-line border-y border-line">
             {notes.map((n) => (
               <li key={n.slug} className="py-6">
-                <p className="font-mono text-xs tracking-wide text-muted uppercase">{n.when}</p>
+                <p className="font-mono text-xs tracking-wide text-muted uppercase">
+                  {n.when} · {n.subject}
+                </p>
                 <Link
-                  to="/notes/waste"
+                  to={n.to}
                   className="mt-2 block text-lg font-medium text-fg hover:text-silver"
                 >
                   {n.title}
