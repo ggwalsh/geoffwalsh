@@ -21,7 +21,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
       </p>
       <p className="mt-3 text-sm leading-relaxed text-muted">{tool.blurb}</p>
       <span className="mt-4 inline-flex items-center gap-2 text-sm text-fg">
-        Open {tool.name} <ArrowRight className="size-4" />
+        Open my {tool.name} <ArrowRight className="size-4" />
       </span>
     </Link>
   );

@@ -9,10 +9,10 @@ function ToolsIndex() {
     <main className="mx-auto max-w-5xl px-5 py-16">
       <p className="font-mono text-xs tracking-widest text-accent uppercase">Tools</p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
-        Small systems for messy ops.
+        My small systems for messy ops.
       </h1>
       <p className="mt-4 max-w-xl text-muted">
-        Wall is the planner. Board is the day. Stock is the min file. All stay on this device.
+        My planner. My board. My min file. They stay on your device.
       </p>
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (

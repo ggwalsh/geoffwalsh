@@ -11,9 +11,9 @@ import {
   type DoorFixture,
   type Placement,
   type WallSeg,
-} from "@/lib/wall-plan";
-import type { ExhaustSpec, Series } from "@/lib/wall-pack";
-import { useWall } from "@/lib/wall-store";
+} from "./plan";
+import type { ExhaustSpec, Series } from "./pack";
+import { useWall } from "./store";
 
 const SNAP = 6;
 const PPI = 2.2;

@@ -3,9 +3,9 @@ import { ApertureG } from "@/components/aperture-g";
 import { useBrand } from "@/lib/brand-state";
 
 const links = [
-  { to: "/", hash: "work", label: "Work" },
-  { to: "/tools", label: "Tools" },
-  { to: "/notes", label: "Notes" },
+  { to: "/", hash: "work", label: "My work" },
+  { to: "/tools", label: "My tools" },
+  { to: "/notes", label: "My notes" },
 ] as const;
 
 export function SiteHeader() {

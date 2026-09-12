@@ -6,7 +6,7 @@ import {
   parseCsv,
   summarize,
   type StockInput,
-} from "./stock-pack.ts";
+} from "./pack.ts";
 
 const base: StockInput = {
   sku: "A",

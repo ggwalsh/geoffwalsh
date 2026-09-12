@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { SAMPLE_WALLS, type WallSeg } from "@/lib/wall-plan";
+import { SAMPLE_WALLS, type WallSeg } from "./plan";
 import {
   DEFAULT_DOOR,
   DEFAULT_EXHAUST,
   type DoorSpec,
   type ExhaustSpec,
   type Series,
-} from "@/lib/wall-pack";
+} from "./pack";
 
 export type Tool = "wall" | "existing" | "door" | "exhaust" | "erase" | null;
 

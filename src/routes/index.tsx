@@ -63,14 +63,14 @@ function Home() {
               to="/tools"
               className="inline-flex min-h-11 items-center gap-2 rounded-full bg-amaranth px-5 text-sm font-medium text-fg transition-transform duration-150 hover:bg-accent active:scale-[0.96]"
             >
-              Open the tools
+              Open my tools
               <ArrowRight className="size-4" />
             </Link>
             <a
               href="#work"
               className="inline-flex min-h-11 items-center rounded-full border border-line px-5 text-sm text-silver transition-colors hover:border-silver hover:text-fg"
             >
-              See the work
+              See my work
             </a>
           </div>
         </div>
@@ -97,7 +97,7 @@ function Home() {
               because I wanted a second craft that still serves the first.
             </p>
             <p>
-              This site is where those tools live. Working things a branch, a counter,
+              This site is where my tools live. Working things a branch, a counter,
               or a small crew can use on a Monday. Yours included.
             </p>
           </div>
@@ -139,7 +139,7 @@ function Home() {
         <div className="mx-auto max-w-5xl px-5 py-16">
           <p className="font-mono text-xs tracking-widest text-accent uppercase">Tools</p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-            One planner that earns the visit. A board for the day. A min file that a counter can run.
+            My planner. My board. My min file.
           </h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => (
@@ -153,7 +153,7 @@ function Home() {
         <div className="mx-auto max-w-5xl px-5 py-16">
           <p className="font-mono text-xs tracking-widest text-accent uppercase">Notes</p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-            Short pieces from the course work that still hold.
+            My notes from the course work that still hold.
           </h2>
           <ul className="mt-8 divide-y divide-line border-y border-line">
             {notes.map((n) => (
@@ -179,7 +179,7 @@ function Home() {
             Based in Calgary. Usually on a job or a laptop after hours.
           </h2>
           <p className="mt-4 max-w-xl text-muted">
-            If you run a branch, a counter, or a crew and one of these tools is
+            If you run a branch, a counter, or a crew and one of my tools is
             useful — or wrong in a way that matters — that is the conversation.
           </p>
           <a

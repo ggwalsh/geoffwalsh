@@ -6,9 +6,9 @@ export const Route = createFileRoute("/notes/")({ component: NotesIndex });
 function NotesIndex() {
   return (
     <main className="mx-auto max-w-3xl px-5 py-16">
-      <p className="font-mono text-xs tracking-widest text-accent uppercase">Notes</p>
+      <p className="font-mono text-xs tracking-widest text-accent uppercase">My notes</p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
-        Short pieces. Ops, data, the city.
+        My notes. Ops, data, the city.
       </h1>
       <ol className="mt-12 divide-y divide-line border-y border-line">
         {notes.map((n) => (

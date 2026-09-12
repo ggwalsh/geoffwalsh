@@ -10,7 +10,7 @@ import {
   type ExhaustSpec,
   type PanelWidth,
   type Series,
-} from "@/lib/wall-pack";
+} from "./pack";
 
 export type DoorFixture = DoorSpec & {
   id: string;

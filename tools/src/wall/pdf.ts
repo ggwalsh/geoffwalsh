@@ -1,6 +1,6 @@
-import { renderWallPlan } from "@/components/wall-canvas";
-import type { Series } from "@/lib/wall-pack";
-import type { BomLine, WallSeg } from "@/lib/wall-plan";
+import { renderWallPlan } from "./canvas";
+import type { Series } from "./pack";
+import type { BomLine, WallSeg } from "./plan";
 
 function esc(s: string) {
   return s.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
