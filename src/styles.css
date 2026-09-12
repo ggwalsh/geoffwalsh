@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0c0b0b;
+  --color-carbon: #1e1c1d;
+  --color-surface: #161415;
+  --color-raised: #1c1819;
+  --color-line: #2a2426;
+  --color-amaranth: #8a1a30;
+  --color-accent: #b32440;
+  --color-silver: #afafaf;
+  --color-fg: #eceaea;
+  --color-muted: #8c8888;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+    background: var(--color-ink);
+    color: var(--color-fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes gw-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+
+@keyframes gw-dash {
+  to {
+    stroke-dashoffset: -240;
+  }
+}
+
+@keyframes gw-draw {
+  from {
+    stroke-dashoffset: 260;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes gw-fade {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.gw-mark .arc {
+  fill: none;
+  stroke: currentColor;
+}
+.gw-mark .bar {
+  stroke: var(--color-accent);
+  fill: none;
+}
+.gw-mark .tick {
+  fill: var(--color-accent);
+}
+
+.gw-mark[data-state="idle"] .tick {
+  animation: gw-pulse 2.6s ease-in-out infinite;
+}
+.gw-mark[data-state="think"] .arc {
+  stroke-dasharray: 14 16;
+  animation: gw-dash 7.5s linear infinite;
+}
+.gw-mark[data-state="build"] .arc {
+  stroke-dasharray: 260;
+  animation: gw-draw 1.6s ease-in-out infinite alternate;
+}
+.gw-mark[data-state="build"] .bar,
+.gw-mark[data-state="build"] .tick {
+  animation: gw-fade 1.6s ease-in-out infinite alternate;
+}
+.gw-mark[data-state="done"] .arc {
+  stroke: #e2e2e2;
+}
+.gw-mark[data-state="done"] .bar {
+  stroke: #f0dce0;
+}
+.gw-mark[data-state="done"] .tick {
+  fill: #f0dce0;
+}
