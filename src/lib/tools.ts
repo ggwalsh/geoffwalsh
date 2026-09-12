@@ -11,4 +11,10 @@ export const tools = [
     name: "Board",
     blurb: "What is actually blocking the day. Owner, ETA, who is waiting — not the Gantt.",
   },
+  {
+    slug: "stock" as const,
+    n: "03",
+    name: "Stock",
+    blurb: "Drop a SKU export. Mins, safety stock, HIGH / EXCESS — the counter version.",
+  },
 ];

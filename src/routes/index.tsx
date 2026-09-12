@@ -138,9 +138,9 @@ function Home() {
         <div className="mx-auto max-w-5xl px-5 py-16">
           <p className="font-mono text-xs tracking-widest text-accent uppercase">Tools</p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-            One planner that earns the visit. A board for the day that is actually happening.
+            One planner that earns the visit. A board for the day. A min file that a counter can run.
           </h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => (
               <ToolCard key={tool.slug} tool={tool} />
             ))}

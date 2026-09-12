@@ -12,9 +12,9 @@ function ToolsIndex() {
         Small systems for messy ops.
       </h1>
       <p className="mt-4 max-w-xl text-muted">
-        Wall is the planner. Board is the day. Both stay on this device.
+        Wall is the planner. Board is the day. Stock is the min file. All stay on this device.
       </p>
-      <div className="mt-12 grid gap-4 sm:grid-cols-2">
+      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (
           <ToolCard key={tool.slug} tool={tool} />
         ))}

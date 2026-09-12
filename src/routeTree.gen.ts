@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsBoardRouteImport } from './routes/tools.board'
+import { Route as ToolsStockRouteImport } from './routes/tools.stock'
 import { Route as ToolsWallRouteImport } from './routes/tools.wall'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const ToolsBoardRoute = ToolsBoardRouteImport.update({
   path: '/tools/board',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsStockRoute = ToolsStockRouteImport.update({
+  id: '/tools/stock',
+  path: '/tools/stock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsWallRoute = ToolsWallRouteImport.update({
   id: '/tools/wall',
   path: '/tools/wall',
@@ -38,12 +44,14 @@ const ToolsWallRoute = ToolsWallRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/tools/board': typeof ToolsBoardRoute
+  '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
   '/tools/': typeof ToolsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/tools/board': typeof ToolsBoardRoute
+  '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
   '/tools': typeof ToolsIndexRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/tools/board': typeof ToolsBoardRoute
+  '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
   '/tools/': typeof ToolsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tools/board' | '/tools/wall' | '/tools/'
+  fullPaths: '/' | '/tools/board' | '/tools/stock' | '/tools/wall' | '/tools/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tools/board' | '/tools/wall' | '/tools'
-  id: '__root__' | '/' | '/tools/board' | '/tools/wall' | '/tools/'
+  to: '/' | '/tools/board' | '/tools/stock' | '/tools/wall' | '/tools'
+  id:
+    | '__root__'
+    | '/'
+    | '/tools/board'
+    | '/tools/stock'
+    | '/tools/wall'
+    | '/tools/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ToolsBoardRoute: typeof ToolsBoardRoute
+  ToolsStockRoute: typeof ToolsStockRoute
   ToolsWallRoute: typeof ToolsWallRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
 }
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsBoardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/stock': {
+      id: '/tools/stock'
+      path: '/tools/stock'
+      fullPath: '/tools/stock'
+      preLoaderRoute: typeof ToolsStockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/wall': {
       id: '/tools/wall'
       path: '/tools/wall'
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ToolsBoardRoute: ToolsBoardRoute,
+  ToolsStockRoute: ToolsStockRoute,
   ToolsWallRoute: ToolsWallRoute,
   ToolsIndexRoute: ToolsIndexRoute,
 }

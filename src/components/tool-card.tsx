@@ -7,6 +7,7 @@ type Tool = (typeof tools)[number];
 const href = {
   wall: "/tools/wall",
   board: "/tools/board",
+  stock: "/tools/stock",
 } as const;
 
 export function ToolCard({ tool }: { tool: Tool }) {
