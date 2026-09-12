@@ -169,23 +169,7 @@ function Home() {
             </svg>
             @Daghet
           </a>
-          <p className="mt-8 font-mono text-xs tracking-widest text-muted uppercase">Profile banners</p>
-          <div className="mt-3 flex flex-wrap gap-3">
-            <a
-              href="/banners/x-header.jpg"
-              download="geoff-walsh-x-header.jpg"
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-silver hover:text-fg"
-            >
-              X header
-            </a>
-            <a
-              href="/banners/linkedin-cover.jpg"
-              download="geoff-walsh-linkedin-cover.jpg"
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-silver hover:text-fg"
-            >
-              LinkedIn cover
-            </a>
-          </div>
+        </div>
         </div>
       </section>
     </main>
