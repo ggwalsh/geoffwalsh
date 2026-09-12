@@ -127,7 +127,7 @@ export function WallApp({ onBrand, homeHref = "./" }: { onBrand?: OnBrand; homeH
           My tools
         </a>
         {" · 01 · Wall"}
-        <a href="https://github.com/ggwalsh/tools/tree/main/src/wall" className="ml-3 text-silver hover:text-fg" target="_blank" rel="noreferrer">
+        <a href="https://github.com/ggwalsh/wall" className="ml-3 text-silver hover:text-fg" target="_blank" rel="noreferrer">
           GitHub
         </a>
       </p>

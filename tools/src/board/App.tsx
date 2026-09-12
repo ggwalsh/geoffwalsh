@@ -117,7 +117,7 @@ export function BoardApp({ onBrand, tv = false, onTv, homeHref = "./" }: { onBra
           My tools
         </a>
         {" · 02 · Board"}
-        <a href="https://github.com/ggwalsh/tools/tree/main/src/board" className="ml-3 text-silver hover:text-fg" target="_blank" rel="noreferrer">
+        <a href="https://github.com/ggwalsh/board" className="ml-3 text-silver hover:text-fg" target="_blank" rel="noreferrer">
           GitHub
         </a>
       </p>

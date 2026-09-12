@@ -12,7 +12,8 @@ function ToolsIndex() {
         My small systems for messy ops.
       </h1>
       <p className="mt-4 max-w-xl text-muted">
-        My planner. My board. My min file. They stay on your device.
+        My planner. My board. My min file. They stay on your device. Each one is
+        its own repo if you only want to take one.
       </p>
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => (

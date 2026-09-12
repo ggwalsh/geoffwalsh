@@ -106,7 +106,7 @@ export function StockApp({ onBrand, homeHref = "./" }: { onBrand?: OnBrand; home
           My tools
         </a>
         {" · 03 · Stock"}
-        <a href="https://github.com/ggwalsh/tools/tree/main/src/stock" className="ml-3 text-silver hover:text-fg" target="_blank" rel="noreferrer">
+        <a href="https://github.com/ggwalsh/stock" className="ml-3 text-silver hover:text-fg" target="_blank" rel="noreferrer">
           GitHub
         </a>
       </p>

@@ -53,8 +53,7 @@ function KioskNote() {
       <section className="mt-16 border-t border-line pt-12">
         <p className="font-mono text-xs tracking-widest text-accent uppercase">The paper</p>
         <p className="mt-2 text-sm text-muted">
-          AAI202 — Applications of Artificial Intelligence. Geoff Walsh, A00186663.
-          Due 26 July 2026.
+          AAI202 — Applications of Artificial Intelligence. Geoff Walsh.
         </p>
         <h2 className="mt-8 text-2xl font-semibold tracking-tight">
           A Comparative Case Study of Supervised and Unsupervised Machine Learning

@@ -43,7 +43,7 @@ function ZorathNote() {
       <section className="mt-16 border-t border-line pt-12">
         <p className="font-mono text-xs tracking-widest text-accent uppercase">The GDD</p>
         <p className="mt-2 text-sm text-muted">
-          GDP102 — Game Design Principles. Geoff Walsh, A00186663. Due 12 April 2026.
+          GDP102 — Game Design Principles. Geoff Walsh.
         </p>
         <h2 className="mt-8 text-2xl font-semibold tracking-tight">
           Zorath the Unmaker
