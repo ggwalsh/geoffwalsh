@@ -8,4 +8,4 @@ Operations, data, and tools. Built as a TanStack Start app.
 
 - **Wall** — SHIELD WALL containment planner
 - **Board** — today’s constraint board
-- **Stock** — SKU min / safety-stock optimiser
+- **Stock** — SKU min / max / safety-stock optimiser

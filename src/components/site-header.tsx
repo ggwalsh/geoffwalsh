@@ -5,6 +5,7 @@ import { useBrand } from "@/lib/brand-state";
 const links = [
   { to: "/", hash: "work", label: "Work" },
   { to: "/tools", label: "Tools" },
+  { to: "/notes", label: "Notes" },
 ] as const;
 
 export function SiteHeader() {

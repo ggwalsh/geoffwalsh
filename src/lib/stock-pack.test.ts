@@ -47,7 +47,9 @@ describe("packSku", () => {
   it("sets zero-demand SKUs to 0 and flags leftover stock as excess", () => {
     const r = packSku({ ...base, demand12: 2, onHand: 14 });
     assert.equal(r.tier, "zero");
-    assert.equal(r.recommended, 0);
+    assert.equal(r.min, 0);
+    assert.equal(r.max, 0);
+    assert.equal(r.safety, 0);
     assert.equal(r.flag, "excess");
     assert.equal(r.orderQty, 0);
   });
@@ -55,7 +57,9 @@ describe("packSku", () => {
   it("gives low movers token stock", () => {
     const r = packSku({ ...base, demand12: 20, onHand: 0 });
     assert.equal(r.tier, "low");
-    assert.equal(r.recommended, 1);
+    assert.equal(r.min, 1);
+    assert.equal(r.max, 1);
+    assert.equal(r.safety, 0);
     assert.equal(r.flag, "high");
     assert.equal(r.orderQty, 1);
   });
@@ -64,9 +68,11 @@ describe("packSku", () => {
     // ADD = 1, lead 9, z 1.65, cv 0.4 → SS = 1.98, cycle = 9 → 11
     const r = packSku(base);
     assert.equal(r.tier, "active");
-    assert.equal(r.recommended, 11);
+    assert.equal(r.safety, 2);
+    assert.equal(r.min, 11);
+    assert.equal(r.max, 60);
     assert.equal(r.flag, "high");
-    assert.equal(r.orderQty, 11);
+    assert.equal(r.orderQty, 60);
   });
 
   it("does not force MOQ when a full carton would blow the 60-day cap", () => {
@@ -83,9 +89,9 @@ describe("packSku", () => {
     assert.ok(r.orderQty >= 1);
   });
 
-  it("does force MOQ when demand can eat it inside the cap", () => {
+  it("orders up to max when stock is below min, and boxes to MOQ if it still fits", () => {
     const r = packSku({ ...base, onHand: 0, moq: 24 });
-    assert.equal(r.orderQty, 24);
+    assert.equal(r.orderQty, 60);
   });
 
   it("flags a demand spike as review when stock is otherwise fine", () => {

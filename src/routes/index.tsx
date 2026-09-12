@@ -4,6 +4,7 @@ import { ApertureG } from "@/components/aperture-g";
 import { ToolCard } from "@/components/tool-card";
 import { useBrand } from "@/lib/brand-state";
 import { tools } from "@/lib/tools";
+import { notes } from "@/lib/notes";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -145,6 +146,29 @@ function Home() {
               <ToolCard key={tool.slug} tool={tool} />
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-line">
+        <div className="mx-auto max-w-5xl px-5 py-16">
+          <p className="font-mono text-xs tracking-widest text-accent uppercase">Notes</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+            Short pieces from the course work that still hold.
+          </h2>
+          <ul className="mt-8 divide-y divide-line border-y border-line">
+            {notes.map((n) => (
+              <li key={n.slug} className="py-6">
+                <p className="font-mono text-xs tracking-wide text-muted uppercase">{n.when}</p>
+                <Link
+                  to="/notes/waste"
+                  className="mt-2 block text-lg font-medium text-fg hover:text-silver"
+                >
+                  {n.title}
+                </Link>
+                <p className="mt-1 max-w-xl text-sm text-muted">{n.dek}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

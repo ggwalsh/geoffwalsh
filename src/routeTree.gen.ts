@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NotesIndexRouteImport } from './routes/notes.index'
+import { Route as NotesWasteRouteImport } from './routes/notes.waste'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsBoardRouteImport } from './routes/tools.board'
 import { Route as ToolsStockRouteImport } from './routes/tools.stock'
@@ -18,6 +20,16 @@ import { Route as ToolsWallRouteImport } from './routes/tools.wall'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesIndexRoute = NotesIndexRouteImport.update({
+  id: '/notes/',
+  path: '/notes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesWasteRoute = NotesWasteRouteImport.update({
+  id: '/notes/waste',
+  path: '/notes/waste',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
@@ -43,45 +55,69 @@ const ToolsWallRoute = ToolsWallRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/notes/waste': typeof NotesWasteRoute
   '/tools/board': typeof ToolsBoardRoute
   '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
+  '/notes/': typeof NotesIndexRoute
   '/tools/': typeof ToolsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/notes/waste': typeof NotesWasteRoute
   '/tools/board': typeof ToolsBoardRoute
   '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
+  '/notes': typeof NotesIndexRoute
   '/tools': typeof ToolsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/notes/waste': typeof NotesWasteRoute
   '/tools/board': typeof ToolsBoardRoute
   '/tools/stock': typeof ToolsStockRoute
   '/tools/wall': typeof ToolsWallRoute
+  '/notes/': typeof NotesIndexRoute
   '/tools/': typeof ToolsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tools/board' | '/tools/stock' | '/tools/wall' | '/tools/'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tools/board' | '/tools/stock' | '/tools/wall' | '/tools'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
+    | '/notes/waste'
     | '/tools/board'
     | '/tools/stock'
     | '/tools/wall'
+    | '/notes/'
+    | '/tools/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/notes/waste'
+    | '/tools/board'
+    | '/tools/stock'
+    | '/tools/wall'
+    | '/notes'
+    | '/tools'
+  id:
+    | '__root__'
+    | '/'
+    | '/notes/waste'
+    | '/tools/board'
+    | '/tools/stock'
+    | '/tools/wall'
+    | '/notes/'
     | '/tools/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  NotesWasteRoute: typeof NotesWasteRoute
   ToolsBoardRoute: typeof ToolsBoardRoute
   ToolsStockRoute: typeof ToolsStockRoute
   ToolsWallRoute: typeof ToolsWallRoute
+  NotesIndexRoute: typeof NotesIndexRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
 }
 
@@ -92,6 +128,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/': {
+      id: '/notes/'
+      path: '/notes'
+      fullPath: '/notes/'
+      preLoaderRoute: typeof NotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/waste': {
+      id: '/notes/waste'
+      path: '/notes/waste'
+      fullPath: '/notes/waste'
+      preLoaderRoute: typeof NotesWasteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/': {
@@ -127,9 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  NotesWasteRoute: NotesWasteRoute,
   ToolsBoardRoute: ToolsBoardRoute,
   ToolsStockRoute: ToolsStockRoute,
   ToolsWallRoute: ToolsWallRoute,
+  NotesIndexRoute: NotesIndexRoute,
   ToolsIndexRoute: ToolsIndexRoute,
 }
 export const routeTree = rootRouteImport

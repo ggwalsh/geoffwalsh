@@ -23,7 +23,9 @@ export type StockRow = StockInput & {
   tier: Tier;
   add: number;
   growth: number | null;
-  recommended: number;
+  safety: number;
+  min: number;
+  max: number;
   daysCover: number | null;
   recDays: number | null;
   gap: number;
@@ -47,6 +49,19 @@ export const DEFAULT_OPTIONS: StockOptions = {
   maxDays: DEFAULT_MAX_DAYS,
   cv: DEFAULT_CV,
 };
+
+export const CSV_COLUMNS: { key: string; need: boolean; about: string; aliases: string }[] = [
+  { key: "PartNum", need: true, about: "SKU / part number", aliases: "Part, SKU, Item" },
+  { key: "PartDescription", need: false, about: "Name on the counter", aliases: "Description, Name" },
+  { key: "OnHandQty", need: false, about: "Units on the shelf now", aliases: "OnHand, QOH" },
+  { key: "Demand12M", need: true, about: "Units sold in the last 12 months", aliases: "Demand, Sold12, LTM" },
+  { key: "DemandPrior12M", need: false, about: "Units sold the year before (for YoY)", aliases: "Prior, PY" },
+  { key: "LeadTimeDays", need: false, about: "Supplier lead time in days. Blank uses 14.", aliases: "LeadTime, LT" },
+  { key: "MinOrderQty", need: false, about: "Carton / MOQ. Only applied if demand can eat it.", aliases: "MOQ, MinQty" },
+  { key: "CurrentMin", need: false, about: "What the system min is today (for comparison)", aliases: "Min, ROP" },
+];
+
+export const TEMPLATE_CSV = `${CSV_COLUMNS.map((c) => c.key).join(",")}\n`;
 
 function num(v: string | undefined): number {
   if (!v) return 0;
@@ -145,45 +160,53 @@ export function packSku(row: StockInput, opt: StockOptions = DEFAULT_OPTIONS): S
   const eff = add * (1 + buf);
 
   let tier: Tier;
-  let recommended: number;
+  let safety = 0;
+  let min = 0;
+  let max = 0;
   if (row.demand12 <= ZERO_MAX) {
     tier = "zero";
-    recommended = 0;
   } else if (row.demand12 <= LOW_MAX) {
     tier = "low";
-    recommended = TOKEN;
+    min = TOKEN;
+    max = TOKEN;
   } else {
     tier = "active";
     const lead = row.leadDays > 0 ? row.leadDays : DEFAULT_LEAD;
-    const ss = Z[opt.service] * opt.cv * eff * Math.sqrt(lead);
-    const raw = eff * lead + ss;
+    const ssRaw = Z[opt.service] * opt.cv * eff * Math.sqrt(lead);
+    safety = ssRaw >= 0.5 ? roundQty(ssRaw) : 0;
+    const rop = eff * lead + ssRaw;
     const cap = eff * opt.maxDays;
-    recommended = roundQty(Math.min(raw, cap));
+    max = roundQty(cap);
+    min = roundQty(Math.min(rop, cap));
+    if (min > max) min = max;
   }
 
   const daysCover = add > 0 ? row.onHand / add : row.onHand > 0 ? Infinity : 0;
-  const recDays = add > 0 && recommended > 0 ? recommended / add : recommended === 0 ? 0 : null;
-  const gap = recommended - row.onHand;
+  const recDays = add > 0 && min > 0 ? min / add : min === 0 ? 0 : null;
+  const gap = min - row.onHand;
 
   let orderQty = 0;
-  if (gap > 0) {
-    orderQty = roundQty(gap);
-    if (tier === "active" && row.moq > 0) {
-      const daysAfterMoq = add > 0 ? (row.onHand + row.moq) / add : Infinity;
-      if (daysAfterMoq <= opt.maxDays || gap >= row.moq * 0.4) {
-        orderQty = Math.max(orderQty, Math.round(row.moq));
-      }
+  if (row.onHand < min) {
+    const need = Math.max(max - row.onHand, min - row.onHand, 0);
+    orderQty = roundQty(need);
+    if (tier === "active" && row.moq > 0 && add > 0) {
+      const packs = Math.ceil(orderQty / row.moq);
+      const boxed = packs * Math.round(row.moq);
+      const days = (row.onHand + boxed) / add;
+      if (days <= opt.maxDays * 1.15) orderQty = boxed;
     }
   }
 
-  const { flag, note } = flagRow(tier, row, recommended, daysCover, growth, opt.maxDays);
+  const { flag, note } = flagRow(tier, row, min, max, daysCover, growth, opt.maxDays);
 
   return {
     ...row,
     tier,
     add,
     growth,
-    recommended,
+    safety,
+    min,
+    max,
     daysCover: Number.isFinite(daysCover) ? daysCover : null,
     recDays,
     gap,
@@ -196,7 +219,8 @@ export function packSku(row: StockInput, opt: StockOptions = DEFAULT_OPTIONS): S
 function flagRow(
   tier: Tier,
   row: StockInput,
-  rec: number,
+  min: number,
+  max: number,
   daysCover: number,
   growth: number | null,
   maxDays: number,
@@ -204,15 +228,15 @@ function flagRow(
   if (tier === "zero" && row.onHand > 0) {
     return { flag: "excess", note: "No demand in 12 months — dead stock." };
   }
-  if (rec > 0 && row.onHand < rec * 0.5) {
+  if (min > 0 && row.onHand < min * 0.5) {
     return { flag: "high", note: "On hand is under half the recommended min." };
   }
   const excessDays = Math.max(maxDays * 1.5, 90);
   if (daysCover > excessDays) {
     return { flag: "excess", note: `More than ${Math.round(excessDays)} days of cover.` };
   }
-  if (rec > 0 && row.onHand > rec * 2.5 && daysCover > maxDays) {
-    return { flag: "excess", note: "On hand is well above the 60-day cap." };
+  if (max > 0 && row.onHand > max) {
+    return { flag: "excess", note: `Above the ${maxDays}-day max.` };
   }
   if (growth != null && growth > 0.5) {
     return { flag: "review", note: "Demand jumped more than 50% year on year." };
@@ -258,9 +282,12 @@ export function toCsv(rows: StockRow[]): string {
     "YoY",
     "LeadTimeDays",
     "DaysCover",
-    "RecommendedMin",
+    "SafetyStock",
+    "Min",
+    "Max",
     "OrderQty",
     "MOQ",
+    "CurrentMin",
     "Note",
   ];
   const body = rows.map((r) =>
@@ -274,9 +301,12 @@ export function toCsv(rows: StockRow[]): string {
       r.growth == null ? "" : (r.growth * 100).toFixed(0) + "%",
       r.leadDays,
       r.daysCover == null ? "" : r.daysCover.toFixed(0),
-      r.recommended,
+      r.safety,
+      r.min,
+      r.max,
       r.orderQty,
       r.moq,
+      r.currentMin,
       r.note,
     ]
       .map(csvCell)

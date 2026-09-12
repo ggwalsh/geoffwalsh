@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState, type DragEvent } from "react";
 import { useBrand } from "@/lib/brand-state";
 import {
+  CSV_COLUMNS,
   DEFAULT_OPTIONS,
   packFile,
   parseCsv,
@@ -112,12 +113,13 @@ function StockTool() {
         {" · 03 · Stock"}
       </p>
       <h1 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-        Drop a SKU export. Get mins that a counter can run.
+        Drop a SKU export. Get min, max, and safety stock a counter can run.
       </h1>
       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
         Same rules that kept a Calgary branch under 60 days of inventory: zero and
-        sporadic movers get little or nothing, active SKUs get lead-time demand plus
-        a safety buffer, and a full carton only lands if the demand can eat it.
+        sporadic movers get little or nothing. Active SKUs get a min (lead-time
+        demand plus safety stock), a max at the cover cap, and a buy-up-to-max
+        only when they are under min. A carton only lands if the demand can eat it.
       </p>
 
       <div className="mt-8 flex flex-wrap items-center gap-2">
@@ -141,6 +143,13 @@ function StockTool() {
         >
           Load sample
         </button>
+        <a
+          href="/stock-template.csv"
+          download="stock-template.csv"
+          className="inline-flex min-h-11 items-center rounded-full border border-line px-5 text-sm text-silver hover:text-fg"
+        >
+          Empty template
+        </a>
         {rows.length > 0 && (
           <button
             type="button"
@@ -164,9 +173,32 @@ function StockTool() {
           drag ? "border-amaranth bg-surface text-fg" : "border-line",
         )}
       >
-        Drop a CSV here. Needs a part / SKU column and 12-month demand. Optional:
-        on-hand, prior year, lead time (days), MOQ, current min.
+        Drop a CSV here, or start from the empty template. First row must be
+        headers. Excel works if you save as CSV.
         {fileName && <span className="mt-2 block font-mono text-xs text-silver">{fileName}</span>}
+      </div>
+
+      <div className="mt-4 overflow-x-auto rounded-lg border border-line">
+        <table className="w-full min-w-[36rem] text-left text-sm">
+          <thead className="bg-surface font-mono text-xs tracking-wide text-muted uppercase">
+            <tr>
+              <Th>Column</Th>
+              <Th>Need</Th>
+              <Th>What it is</Th>
+              <Th>Also accepts</Th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-line">
+            {CSV_COLUMNS.map((c) => (
+              <tr key={c.key}>
+                <td className="px-3 py-2 font-mono text-xs text-fg">{c.key}</td>
+                <td className="px-3 py-2 text-xs text-silver">{c.need ? "Required" : "Optional"}</td>
+                <td className="px-3 py-2 text-xs text-muted">{c.about}</td>
+                <td className="px-3 py-2 font-mono text-xs text-muted">{c.aliases}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {error && <p className="mt-4 text-sm text-accent">{error}</p>}
@@ -230,7 +262,7 @@ function StockTool() {
           </div>
 
           <div className="mt-4 overflow-x-auto rounded-lg border border-line">
-            <table className="w-full min-w-[52rem] text-left text-sm">
+            <table className="w-full min-w-[64rem] text-left text-sm">
               <thead className="bg-surface font-mono text-xs tracking-wide text-muted uppercase">
                 <tr>
                   <Th>Part</Th>
@@ -239,7 +271,9 @@ function StockTool() {
                   <Th className="text-right">On hand</Th>
                   <Th className="text-right">12m</Th>
                   <Th className="text-right">Cover</Th>
+                  <Th className="text-right">Safety</Th>
                   <Th className="text-right">Min</Th>
+                  <Th className="text-right">Max</Th>
                   <Th className="text-right">Buy</Th>
                 </tr>
               </thead>
@@ -258,7 +292,9 @@ function StockTool() {
                     <TdNum>{fmt(r.onHand)}</TdNum>
                     <TdNum>{fmt(r.demand12)}</TdNum>
                     <TdNum>{r.daysCover == null ? "—" : `${Math.round(r.daysCover)}d`}</TdNum>
-                    <TdNum>{fmt(r.recommended)}</TdNum>
+                    <TdNum>{fmt(r.safety)}</TdNum>
+                    <TdNum>{fmt(r.min)}</TdNum>
+                    <TdNum>{fmt(r.max)}</TdNum>
                     <TdNum>{r.orderQty ? fmt(r.orderQty) : "—"}</TdNum>
                   </tr>
                 ))}
