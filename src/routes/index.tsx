@@ -170,7 +170,6 @@ function Home() {
             @Daghet
           </a>
         </div>
-        </div>
       </section>
     </main>
   );
