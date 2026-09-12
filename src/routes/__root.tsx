@@ -1,5 +1,6 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { AuthProvider } from "@/lib/auth/provider";
+import { BootScreen } from "@/components/boot-screen";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -40,10 +41,20 @@ function RootDocument() {
   return (
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{if(localStorage.getItem("gw-boot")==="1"||/view=tv/.test(location.search)||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.boot="done"}catch(e){}',
+          }}
+        />
         <HeadContent />
       </head>
       <body className="bg-ink text-fg">
+        <noscript>
+          <style>{`html{overflow:auto}html .gw-boot{display:none}`}</style>
+        </noscript>
         <PreviewHostBridge />
+        <BootScreen />
         <AuthProvider>
           <div className="flex min-h-dvh flex-col">
             <SiteHeader />
