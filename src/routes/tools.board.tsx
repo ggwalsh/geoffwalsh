@@ -1,9 +1,16 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { BoardApp } from "../../tools/src/board/App";
 import { useBrand } from "@/lib/brand-state";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/tools/board")({
   ssr: false,
+  head: () =>
+    pageHead(
+      "Board",
+      "What is actually blocking the day. Owner, ETA, who is waiting — not the Gantt.",
+      "/tools/board",
+    ),
   validateSearch: (s: Record<string, unknown>) => ({
     view: s.view === "tv" ? ("tv" as const) : undefined,
   }),

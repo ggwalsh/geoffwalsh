@@ -1,6 +1,7 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { AuthProvider } from "@/lib/auth/provider";
 import { BootScreen } from "@/components/boot-screen";
+import { NotFoundPage } from "@/components/not-found";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -34,6 +35,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  notFoundComponent: NotFoundPage,
   component: RootDocument,
 });
 

@@ -67,13 +67,13 @@
   }
 }
 
-@keyframes gw-pulse {
+@keyframes gw-idle-breathe {
   0%,
   100% {
-    opacity: 1;
+    filter: brightness(1);
   }
   50% {
-    opacity: 0.28;
+    filter: brightness(1.14);
   }
 }
 
@@ -113,8 +113,8 @@
   fill: var(--color-accent);
 }
 
-.gw-mark[data-state="idle"] .tick {
-  animation: gw-pulse 2.6s ease-in-out infinite;
+.gw-mark[data-state="idle"] {
+  animation: gw-idle-breathe 5.5s ease-in-out infinite;
 }
 .gw-mark[data-state="think"] .arc {
   stroke-dasharray: 14 16;
@@ -124,8 +124,7 @@
   stroke-dasharray: 260;
   animation: gw-draw 1.6s ease-in-out infinite alternate;
 }
-.gw-mark[data-state="build"] .bar,
-.gw-mark[data-state="build"] .tick {
+.gw-mark[data-state="build"] .cross {
   animation: gw-fade 1.6s ease-in-out infinite alternate;
 }
 .gw-mark[data-state="done"] .arc {
@@ -158,4 +157,50 @@ html[data-boot="done"] .gw-boot {
 
 html:not([data-boot="done"]) {
   overflow: hidden;
+}
+
+.gw-hero {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(48% 72% at 72% 48%, #1e1c1db3, transparent 74%);
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  .gw-hero {
+    background: radial-gradient(
+      ellipse 48% 72% at 72% 48%,
+      color-mix(in oklab, var(--color-carbon) 70%, transparent),
+      transparent 74%
+    );
+  }
+}
+
+.gw-hero-mark {
+  position: absolute;
+  top: 50%;
+  right: -6%;
+  width: 16rem;
+  height: 16rem;
+  color: var(--color-silver);
+  pointer-events: none;
+  opacity: 0.16;
+  transform: translateY(-50%);
+}
+
+@media (width >= 640px) {
+  .gw-hero-mark {
+    right: 2%;
+    width: 24rem;
+    height: 24rem;
+    opacity: 0.18;
+  }
+}
+
+@media (width >= 1024px) {
+  .gw-hero-mark {
+    right: 0;
+    width: 30rem;
+    height: 30rem;
+    opacity: 0.2;
+  }
 }

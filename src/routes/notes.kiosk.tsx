@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 
-export const Route = createFileRoute("/notes/kiosk")({ component: KioskNote });
+export const Route = createFileRoute("/notes/kiosk")({
+  head: () =>
+    pageHead(
+      "The kiosk still has to be fair",
+      "SVMs and CNNs win the accuracy contest. The people in front of the camera still have to survive the training set.",
+      "/notes/kiosk",
+    ),
+  component: KioskNote,
+});
 
 function KioskNote() {
   return (
@@ -9,7 +18,7 @@ function KioskNote() {
         <Link to="/notes" className="hover:text-fg">
           My notes
         </Link>
-        {" · Jul 2026 · AAI202"}
+        {" · Jul 2026"}
       </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
         The kiosk still has to be fair
@@ -25,7 +34,7 @@ function KioskNote() {
           the feature set is small and you can still see the boundary. Unsupervised
           models do the cheap work — PCA to shrink the space, K-Means to find the
           piles of similar calls nobody had time to tag. Production systems use
-          both. That was the assignment.
+          both.
         </p>
         <p>
           The bit that stuck is the cost of being wrong on a person. Face systems
@@ -51,11 +60,7 @@ function KioskNote() {
       </div>
 
       <section className="mt-16 border-t border-line pt-12">
-        <p className="font-mono text-xs tracking-widest text-accent uppercase">The paper</p>
-        <p className="mt-2 text-sm text-muted">
-          AAI202 — Applications of Artificial Intelligence. Geoff Walsh.
-        </p>
-        <h2 className="mt-8 text-2xl font-semibold tracking-tight">
+        <h2 className="text-2xl font-semibold tracking-tight">
           A Comparative Case Study of Supervised and Unsupervised Machine Learning
           Approaches in Artificial Intelligence: Applications to Multimodal Customer
           Service Systems

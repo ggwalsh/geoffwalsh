@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 
-export const Route = createFileRoute("/notes/waste")({ component: WasteNote });
+export const Route = createFileRoute("/notes/waste")({
+  head: () =>
+    pageHead(
+      "Bins that wait for a Tuesday",
+      "Calgary already sorts three streams. The trucks still run like the fill level never changed.",
+      "/notes/waste",
+    ),
+  component: WasteNote,
+});
 
 function WasteNote() {
   return (
@@ -9,7 +18,7 @@ function WasteNote() {
         <Link to="/notes" className="hover:text-fg">
           My notes
         </Link>
-        {" · Jun 2026 · AAI202"}
+        {" · Jun 2026"}
       </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
         Bins that wait for a Tuesday
@@ -43,18 +52,13 @@ function WasteNote() {
           is not “the algorithm decided.”
         </p>
         <p>
-          This is not a proposal. It is the argument I wrote for an applied AI
-          paper: the constraint is not whether Calgary can sort. It is whether
-          the collection still pretends Tuesday is the same every week.
+          This is not a proposal. The constraint is not whether Calgary can sort.
+          It is whether the collection still pretends Tuesday is the same every week.
         </p>
       </div>
 
       <section className="mt-16 border-t border-line pt-12">
-        <p className="font-mono text-xs tracking-widest text-accent uppercase">The paper</p>
-        <p className="mt-2 text-sm text-muted">
-          AAI202 — Applications of Artificial Intelligence. Geoff Walsh.
-        </p>
-        <h2 className="mt-8 text-2xl font-semibold tracking-tight">
+        <h2 className="text-2xl font-semibold tracking-tight">
           Leveraging Artificial Intelligence for Optimized Waste Collection and Improved Recycling Outcomes: Implications for Calgary, Alberta
         </h2>
 
