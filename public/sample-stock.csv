@@ -10,10 +10,10 @@ TAPE-RED,Red barrier tape 1000ft,40,4,6,5,12,24
 SW-P48W,48in Shield Wall panel,4,96,40,10,1,8
 SW-P36W,36in Shield Wall panel,18,74,70,10,1,12
 SW-CORNER,90 degree corner post,2,48,44,10,4,6
-DOOR-OP-36,36in auto door operator,0,18,12,28,1,2
-DOOR-OP-42,42in auto door operator,3,14,15,28,1,2
-SENSOR-BEAM,Safety beam pair,1,36,34,21,1,2
-OIL-HYD,Hydraulic closer oil 1L,22,3,2,18,6,8
+POLY-6MIL,6mil poly sheeting roll,0,18,12,28,1,2
+POLY-DOOR,Zippered poly door flap,3,14,15,28,1,2
+HOSE-25,Neg-air hose 25ft,1,36,34,21,1,2
+GLUE-SPR,Spray adhesive 17oz,22,3,2,18,6,8
 BOOT-DISP,Disposable boot cover 100ct,12,310,280,9,10,20
 RESP-CART,P100 cartridge pair,0,220,90,16,8,30
 WIPES-SURF,Surface disinfectant wipes,140,860,840,8,12,60
